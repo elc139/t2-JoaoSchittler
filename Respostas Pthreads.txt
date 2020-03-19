@@ -1,0 +1,26 @@
+1) 
+Particionamento:
+Cada thread é criada com um identificador i, que é usado para descobrir que parte dos produto a thread vai executar
+for (i = 0; i < nthreads; i++)
+      pthread_create(&threads[i], &attr, dotprod_worker, (void *) i);
+
+int start = offset*wsize;
+int end = start + wsize;
+
+for (i = start; i < end ; i++)
+         mysum += (a[i] * b[i]);
+
+Comunicação:
+Mutexes são usados no primeiro programa para evitar uma condição de corrida entre as threads ao contabilizar a soma do produto escalar.
+pthread_mutex_lock (&mutexsum);
+dotdata.c += mysum;
+pthread_mutex_unlock (&mutexsum);
+
+Aglomeração:
+
+Mapeamento:
+
+2)
+Speedup(2) = 1325752/950464 = 1.394;
+Speedup(4) = 1325752/724917 = 1.828;
+

@@ -1,0 +1,4 @@
+Processador Intel Core i5-9300H 2.4GHz.
+SO Windows 10.
+8GB de memória RAM.
+4 Cores com 2 threads cada.

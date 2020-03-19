@@ -1,0 +1,6 @@
+tool,nthreads,size,repetitions,usec
+Pthreads,1,1000000,2000,1325752
+Pthreads,2,500000,2000,950464
+Pthreads,4,250000,2000,724917
+OpenMP,1,1000000,2000,5227948
+OpenMP,2,500000,2000,2580534
