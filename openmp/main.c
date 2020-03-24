@@ -26,7 +26,7 @@ void parallel_dotprod(double* a,double* b,double* sum,int nthreads,int worksize)
 	#pragma omp parallel shared(a,b,sum,worksize) private(i,soma_parcial)
 	{
 		soma_parcial = 0;
-		#pragma omp for schedule(static,worksize) nowait
+		#pragma omp for schedule(dynamic,worksize) nowait
 		for(i = 0; i < size; i++)
 		{
 			soma_parcial += (a[i]*b[i]);
