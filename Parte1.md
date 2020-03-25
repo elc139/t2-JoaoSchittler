@@ -34,4 +34,5 @@ Worksize é dividido pelo número de threads
 | 2 threads           | 1.394 |  1.379 |  1.403  | 1.526 | 1.235 | 1.086  |           
 | 4 threads           | 1.828 |  1.441 |  1.627  | 1.526 | 1.287 | 1.140  | 
 | 8 threads           | 2.821 |  2.360 |  3.040  | 1.439 | 1.103 | 1.087  |
+--------------
 A diferença entre dotprod e dotprod2 é que dotprod2 não usa mutexes, isso gera uma condição de corrida no código de dotprod2, tornando o resultado do programa incerto.
