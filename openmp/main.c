@@ -17,23 +17,29 @@ void fill(double *a, int size, double value)
       a[i] = value;
    }
 }
-void parallel_dotprod(double* a,double* b,double* sum,int nthreads,int worksize)
+void parallel_dotprod(double* a,double* b,double* sum,int nthreads,int worksize,int reps)
 {
 	omp_set_num_threads(nthreads);
 	int size = nthreads * worksize;
 	double soma_parcial = 0;
 	int i = 0;
-	#pragma omp parallel shared(a,b,sum,worksize) private(i,soma_parcial)
+	int rep = 0;
+	#pragma omp parallel shared(a,b,sum,worksize) private(i,soma_parcial,rep)
 	{
-		soma_parcial = 0;
-		#pragma omp for schedule(dynamic,worksize) nowait
-		for(i = 0; i < size; i++)
+		rep = 0;
+		while(rep < reps)
 		{
-			soma_parcial += (a[i]*b[i]);
+			soma_parcial = 0;
+			#pragma omp for schedule(dynamic,worksize) nowait
+			for(i = 0; i < size; i++)
+			{
+				soma_parcial += (a[i]*b[i]);
+			}
+			rep++;
 		}
 		#pragma omp critical
 		{
-			*(sum) += soma_parcial;
+			*(sum) += soma_parcial;	
 		}
 	}
 }
@@ -61,11 +67,8 @@ int main()
 				for(int j = 0; j < VARIAS;j++) // Faz o teste varias vezes e calcula a média dos tempos
 				{
 					start_time = wtime();
-					for(int i = 0; i< reps;i++)
-					{
-						c = 0;
-						parallel_dotprod(a,b,&c,nthreads,worksize);
-					}
+					c = 0;
+					parallel_dotprod(a,b,&c,nthreads,worksize,reps);
 					end_time   = wtime();
 					totaltime  += (long) (end_time - start_time);
 				}
